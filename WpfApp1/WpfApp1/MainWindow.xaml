@@ -11,7 +11,24 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <Button Width="100" Height="40" Content="点を1000個追加" Click="Button_Click"/>
-        <Image Grid.Column="1" x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image Grid.Column="1" x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="500">
+            <Image.LayoutTransform>
+                <ScaleTransform
+                    CenterX="0" CenterY="0"
+                    ScaleX="{Binding ElementName=slider,Path=Value}"
+                    ScaleY="{Binding ElementName=slider,Path=Value}"
+                />
+            </Image.LayoutTransform>
+        </Image>
+
+        <Slider x:Name="slider" Grid.Row="5" Grid.ColumnSpan="5"
+                Minimum="1" Maximum="128" Value="128" IsDirectionReversed="True"/>
+
     </Grid>
 </Window>
