@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Image x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Width="100" Height="40" Content="点を1000個追加" Click="Button_Click"/>
+        <Image Grid.Column="1" x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>
