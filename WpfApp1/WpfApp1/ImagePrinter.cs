@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace WpfApp1
 {
     internal class ImagePrinter
     {
-        private Bitmap _bitmap = new Bitmap(12800, 12800);
-
         private System.Windows.Controls.Image _imageControl;
 
         public ImagePrinter(System.Windows.Controls.Image imageControl)
@@ -23,33 +16,24 @@ namespace WpfApp1
 
         public void Print()
         {
-            Bitmap image = GetBitmap();
-            IntPtr hbitmap = image.GetHbitmap();
+            // Define parameters used to create the BitmapSource.
+            PixelFormat pf = PixelFormats.BlackWhite;
+            int width = 12800;
+            int height = 12800;
+            int rawStride = (width * pf.BitsPerPixel + 7) / 8;
+            byte[] rawImage = new byte[rawStride * height];
 
-            _imageControl.Source = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            
-            DeleteObject(hbitmap);
-        }
+            // Initialize the image with data.
+            Random value = new Random();
+            value.NextBytes(rawImage);
 
-        private Bitmap GetBitmap()
-        {
-            //ImageオブジェクトのGraphicsオブジェクトを作成する
-            Graphics g = Graphics.FromImage(_bitmap);
+            // Create a BitmapSource.
+            BitmapSource bitmap = BitmapSource.Create(width, height,
+                96, 96, pf, null,
+                rawImage, rawStride);
 
-            //描画する
-            var pen = new Pen(Color.Black, 10);
-            for (int i = 0; i < 10000; i++)
-            {
-                // 描画位置
-                var point = GetRandomPoint();
-                //長方形を描く
-                g.DrawRectangle(pen, point.X, point.Y, 2, 2);
-            }
-
-            //リソースを解放する
-            g.Dispose();
-
-            return _bitmap;
+            // Set image source.
+            _imageControl.Source = bitmap;
         }
 
         private static System.Drawing.Point GetRandomPoint()
@@ -57,8 +41,5 @@ namespace WpfApp1
             Random r1 = new System.Random();
             return new(r1.Next(0, 639) * 20, r1.Next(0, 639) * 20);
         }
-
-        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        public static extern bool DeleteObject(IntPtr hObject); // gdi32.dllのDeleteObjectメソッドの使用を宣言する。
     }
 }
