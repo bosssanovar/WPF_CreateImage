@@ -59,9 +59,8 @@ namespace WpfApp1
 
         public byte[] GetImageArray()
         {
+            // 初期値が黒色(0x00)の配列
             byte[,] image = new byte[_values.GetLength(0) * BlockSize, _values.GetLength(1) * BlockSize];
-
-            InitImage(ref image);
 
             for (var d1 = 0; d1 < _values.GetLength(0); d1++)
             {
@@ -89,24 +88,14 @@ namespace WpfApp1
 
         #region Methods - private -----------------------------------------------------------------------------
 
-        private void InitImage(ref byte[,] image)
-        {
-            for (var d1 = 0; d1 < image.GetLength(0); d1++)
-            {
-                for (var d2 = 0; d2 < image.GetLength(1); d2++)
-                {
-                    image[d1, d2] = byte.MaxValue;
-                }
-            }
-        }
-
         private static void WritePoint(ref byte[,] image, int x, int y)
         {
             for (var i = 1; i < BlockSize - 1; i++)
             {
                 for (var j = 1; j < BlockSize - 1; j++)
                 {
-                    image[(x * BlockSize) + i, (y * BlockSize) + j] = 0;
+                    // 現時点の背景色(黒色0x00)の反対色（白0xFF）を設定
+                    image[(x * BlockSize) + i, (y * BlockSize) + j] = byte.MaxValue;
                 }
             }
         }
@@ -122,7 +111,8 @@ namespace WpfApp1
             {
                 for (int x = 0; x < xmax; x++, i++)
                 {
-                    dest[i] = source[y, x];
+                    // コピー、兼、色反転
+                    dest[i] = (byte)(byte.MaxValue - source[y, x]);
                 }
             }
             return dest;

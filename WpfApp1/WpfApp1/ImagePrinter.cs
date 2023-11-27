@@ -16,15 +16,16 @@ namespace WpfApp1
 
         public void Print(bool[,] values)
         {
+            // 情報源(変更・修正時に参考にして)：
+            // https://learn.microsoft.com/ja-jp/dotnet/desktop/wpf/graphics-multimedia/how-to-create-a-new-bitmapsource?view=netframeworkdesktop-4.8
+
             var gridImage = new GridImage(values);
 
             // Define parameters used to create the BitmapSource.
             PixelFormat pf = PixelFormats.Gray8;
             int width = gridImage.Width;
             int height = gridImage.Height;
-            //int rawStride = (width * pf.BitsPerPixel + 7) / 8;
             int rawStride = width;
-            //byte[] rawImage = new byte[rawStride * height];
             byte[] rawImage = gridImage.GetImageArray();
 
             // Create a BitmapSource.
