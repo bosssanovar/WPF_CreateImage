@@ -32,9 +32,7 @@ namespace WpfApp1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            image.Visibility = Visibility.Hidden;
             _printer.Print();
-            image.Visibility = Visibility.Visible;
         }
     }
 }
