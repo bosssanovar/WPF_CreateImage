@@ -14,18 +14,18 @@ namespace WpfApp1
             _imageControl = imageControl;
         }
 
-        public void Print()
+        public void Print(bool[,] values)
         {
-            // Define parameters used to create the BitmapSource.
-            PixelFormat pf = PixelFormats.BlackWhite;
-            int width = 12800;
-            int height = 12800;
-            int rawStride = (width * pf.BitsPerPixel + 7) / 8;
-            byte[] rawImage = new byte[rawStride * height];
+            var gridImage = new GridImage(values);
 
-            // Initialize the image with data.
-            Random value = new Random();
-            value.NextBytes(rawImage);
+            // Define parameters used to create the BitmapSource.
+            PixelFormat pf = PixelFormats.Gray8;
+            int width = gridImage.Width;
+            int height = gridImage.Height;
+            //int rawStride = (width * pf.BitsPerPixel + 7) / 8;
+            int rawStride = width;
+            //byte[] rawImage = new byte[rawStride * height];
+            byte[] rawImage = gridImage.GetImageArray();
 
             // Create a BitmapSource.
             BitmapSource bitmap = BitmapSource.Create(width, height,
@@ -34,12 +34,6 @@ namespace WpfApp1
 
             // Set image source.
             _imageControl.Source = bitmap;
-        }
-
-        private static System.Drawing.Point GetRandomPoint()
-        {
-            Random r1 = new System.Random();
-            return new(r1.Next(0, 639) * 20, r1.Next(0, 639) * 20);
         }
     }
 }

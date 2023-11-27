@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="650" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -17,18 +17,20 @@
         </Grid.RowDefinitions>
 
         <Button Width="100" Height="40" Content="点を1000個追加" Click="Button_Click"/>
-        <Image Grid.Column="1" x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="500">
-            <Image.LayoutTransform>
-                <ScaleTransform
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+            <Image x:Name="image" HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="500">
+                <Image.LayoutTransform>
+                    <ScaleTransform
                     CenterX="0" CenterY="0"
                     ScaleX="{Binding ElementName=slider,Path=Value}"
                     ScaleY="{Binding ElementName=slider,Path=Value}"
                 />
-            </Image.LayoutTransform>
-        </Image>
+                </Image.LayoutTransform>
+            </Image>
+        </ScrollViewer>
 
         <Slider x:Name="slider" Grid.Row="5" Grid.ColumnSpan="5"
-                Minimum="1" Maximum="128" Value="128" IsDirectionReversed="True"/>
+                Minimum="1" Maximum="64" Value="32" IsDirectionReversed="True"/>
 
     </Grid>
 </Window>

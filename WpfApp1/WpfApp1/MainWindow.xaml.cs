@@ -32,7 +32,35 @@ namespace WpfApp1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _printer.Print();
+            bool[,] sampleValues = new bool[640, 640];
+
+            // 対角線
+            for (int i = 0; i < 640; i++)
+            {
+                sampleValues[i, i] = true;
+            }
+
+            // 一部ブロック
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < 10; j++)
+                {
+                    sampleValues[i, j] = true;
+                }
+            }
+
+            // 一部ブロック
+            for (int i = 0; i < 100; i++)
+            {
+                for (int j = 0; j < 100; j++)
+                {
+                    sampleValues[200 + i, j] = true;
+                    sampleValues[i, 300 + j] = true;
+                    sampleValues[400 + i, 400 + j] = true;
+                }
+            }
+
+            _printer.Print(sampleValues);
         }
     }
 }
