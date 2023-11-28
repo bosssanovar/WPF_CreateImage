@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-    class GridImage
+    class GridImageBinary
     {
         #region Constants -------------------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ namespace WpfApp1
 
         #region Constructor -----------------------------------------------------------------------------------
 
-        public GridImage(bool[,] values)
+        public GridImageBinary(bool[,] values)
         {
             _values = values;
         }
@@ -57,7 +57,7 @@ namespace WpfApp1
 
         #region Methods - public ------------------------------------------------------------------------------
 
-        public byte[] GetImageArray()
+        public byte[] GetImage()
         {
             // 初期値が黒色(0x00)の配列
             byte[,] image = new byte[_values.GetLength(0) * BlockSize, _values.GetLength(1) * BlockSize];
